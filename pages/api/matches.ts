@@ -4,9 +4,13 @@ import { promises as fs } from "fs";
 import { Match, Calendar } from "../../helpers/Types";
 import { getSession } from "@auth0/nextjs-auth0";
 
+interface ErrorResponseType {
+  message: string;
+}
+
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Calendar>
+  res: NextApiResponse<Calendar | ErrorResponseType>
 ) {
   const session = getSession(req, res);
   const dbDirectory = path.join(process.cwd(), "db");
