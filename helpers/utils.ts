@@ -114,7 +114,7 @@ export const formatDate = (date: string) => {
     year: "numeric",
     month: "numeric",
     day: "numeric",
-  };
+  } as const;
 
   return dateObject.toLocaleDateString("hr-HR", options);
 };
