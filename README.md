@@ -19,11 +19,11 @@ yarn dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 .env.local should include variables (fill with your AUTH0 info):
-
+```bash
 AUTH0_SECRET=
 AUTH0_BASE_URL='http://localhost:3000'
 AUTH0_ISSUER_BASE_URL=
 AUTH0_CLIENT_ID=
 AUTH0_CLIENT_SECRET=
 APP_BASE_URL='http://localhost:3000'
-
+```
