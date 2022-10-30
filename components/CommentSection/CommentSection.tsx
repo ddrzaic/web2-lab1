@@ -3,6 +3,7 @@ import {
   addComment,
   deleteComment,
   getNewId,
+  sortComments,
   updateComment,
 } from "../../helpers/commentsHelpers";
 import { Comment } from "../../helpers/Types";
@@ -19,10 +20,11 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
   comments,
   roundId,
 }) => {
-  const initialComments = comments ? comments : [];
+  const initialComments = comments ? sortComments(comments) : [];
   const [commentList, setCommentList] = useState<Comment[]>(initialComments);
   const { user, error, isLoading } = useUser();
   const isLoggedIn = user && !error && !isLoading;
+  const [editCommentId, setEditCommentId] = useState<number | null>(null);
 
   const handleAddComment = (comment: Comment) => {
     setCommentList([...commentList, comment]);
@@ -37,12 +39,20 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
   };
 
   const handleUpdateComment = (comment: Comment) => {
-    setCommentList(
-      commentList.map((comment) =>
-        comment.id === comment.id ? comment : comment
-      )
+    const newCommentList = sortComments(
+      commentList.map((c) => (c.id === comment.id ? comment : c))
     );
+    setCommentList(newCommentList);
     updateComment(comment, roundId);
+    setEditCommentId(null);
+  };
+
+  const handleStartEditing = (comment: Comment) => {
+    setEditCommentId(comment.id);
+  };
+
+  const handleStopEditing = () => {
+    setEditCommentId(null);
   };
 
   return (
@@ -55,15 +65,21 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
           handleDeleteComment={handleDeleteComment}
           handleUpdateComment={handleUpdateComment}
           handleAddComment={handleAddComment}
+          handleStartEditing={handleStartEditing}
           roundId={roundId}
+          isNewComment={comment.id === editCommentId}
+          newCommentId={getNewId(commentList)}
+          handleStopEditing={handleStopEditing}
         />
       ))}
       {isLoggedIn && (
         <CommentComponent
-          newComment={true}
+          isNewComment={true}
           handleAddComment={handleAddComment}
           handleDeleteComment={handleDeleteComment}
           handleUpdateComment={handleUpdateComment}
+          handleStartEditing={handleStartEditing}
+          handleStopEditing={handleStopEditing}
           roundId={roundId}
           newCommentId={getNewId(commentList)}
         />

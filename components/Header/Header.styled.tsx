@@ -8,6 +8,7 @@ export const Header = styled.div`
   align-items: center;
   color: #d8d8d8;
   background-color: #0f3460;
+  margin: -10px -10px 0 -10px;
 `;
 
 export const Login = styled.a`

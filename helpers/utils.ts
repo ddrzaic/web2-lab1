@@ -108,9 +108,10 @@ export const updateMatchInBackend = (match: Match, roundId: number) => {
   );
 };
 
-export const formatDate = (date: string) => {
+export const formatDate = (date: string, isWithTime?: boolean) => {
   const dateObject = new Date(date);
-  const options = {
+
+  const optionsWithTime = {
     year: "numeric",
     month: "numeric",
     day: "numeric",
@@ -118,5 +119,14 @@ export const formatDate = (date: string) => {
     minute: "numeric",
   } as const;
 
-  return dateObject.toLocaleDateString("hr-HR", options);
+  const options = {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  } as const;
+
+  return dateObject.toLocaleDateString(
+    "hr-HR",
+    isWithTime ? optionsWithTime : options
+  );
 };

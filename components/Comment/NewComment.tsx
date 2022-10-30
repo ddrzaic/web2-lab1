@@ -5,17 +5,25 @@ import * as S from "./Comment.styled";
 
 export interface NewCommentProps {
   handleAddComment: (comment: Comment) => void;
+  handleEditComment: (comment: Comment) => void;
+  handleStopEditing: () => void;
   newCommentId: number;
   roundId: number;
+  comment?: Comment;
 }
 
 export const NewComment: React.FC<NewCommentProps> = ({
   handleAddComment,
+  handleEditComment,
+  handleStopEditing,
   newCommentId,
   roundId,
+  comment,
 }) => {
-  const [commentText, setCommentText] = useState<string>("");
+  const [commentText, setCommentText] = useState<string>(comment?.text || "");
   const { user } = useUser();
+
+  const isEdit = comment !== undefined;
 
   const handleCommentChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -32,7 +40,12 @@ export const NewComment: React.FC<NewCommentProps> = ({
       date: new Date().toISOString(),
       time: new Date().toLocaleTimeString(),
     };
-    handleAddComment(newComment);
+    if (isEdit) {
+      newComment.id = comment?.id ?? newCommentId;
+      handleEditComment(newComment);
+    } else {
+      handleAddComment(newComment);
+    }
     setCommentText("");
   };
 
@@ -41,8 +54,23 @@ export const NewComment: React.FC<NewCommentProps> = ({
       <S.CommentInput
         value={commentText}
         onChange={handleCommentChange}
+        placeholder="Unesite komentar..."
+        autoFocus={isEdit}
       ></S.CommentInput>
-      <S.Button onClick={handleAddCommentClick}>Dodaj komentar</S.Button>
+      <S.ButtonsWrapper>
+        <S.Button onClick={handleAddCommentClick}>
+          {isEdit ? "Spremi promjene" : "Dodaj komentar"}
+        </S.Button>
+        {isEdit && (
+          <S.Button
+            onClick={() => {
+              handleStopEditing();
+            }}
+          >
+            Odustani
+          </S.Button>
+        )}
+      </S.ButtonsWrapper>
     </S.Comment>
   );
 };

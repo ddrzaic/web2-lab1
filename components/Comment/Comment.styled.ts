@@ -53,7 +53,7 @@ export const EditButton = styled.p`
   text-decoration: underline #d8d8d8;
   text-align: end;
   font-size: 14px;
-  margin: 5px 5px;
+  margin: 5px 10px;
 `;
 
 export const CommentText = styled.p`
@@ -75,4 +75,19 @@ export const CommentActions = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+`;
+
+export const ButtonsWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 40px;
+`;
+
+export const ModalContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 `;

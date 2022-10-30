@@ -48,17 +48,17 @@ export const getNewId = (comments: Comment[]) => {
 export const sortComments = (comments: Comment[]) => {
   return comments.sort((a, b) => {
     if (a.date > b.date) {
-      return -1;
+      return 1;
     }
     if (a.date < b.date) {
-      return 1;
+      return -1;
     }
     if (a.date === b.date) {
       if (a.time > b.time) {
-        return -1;
+        return 1;
       }
       if (a.time < b.time) {
-        return 1;
+        return -1;
       }
       if (a.time === b.time) {
         return 0;
