@@ -1,14 +1,19 @@
 import React from "react";
 import { RoundPage } from "../../components/RoundPage/RoundPage";
-import { Team, Round, Calendar } from "../../helpers/Types";
+import { Team, Round, Calendar, Comment } from "../../helpers/Types";
 
 export interface RoundProps {
   teams: Team[];
   round: Round;
+  comments: Comment[];
 }
 
-export const RoundIdPage: React.FC<RoundProps> = ({ teams, round }) => {
-  return <RoundPage round={round} teams={teams} />;
+export const RoundIdPage: React.FC<RoundProps> = ({
+  teams,
+  round,
+  comments,
+}) => {
+  return <RoundPage round={round} teams={teams} comments={comments} />;
 };
 
 export async function getServerSideProps(context: any) {
@@ -28,10 +33,14 @@ export async function getServerSideProps(context: any) {
     };
   }
 
+  const commentsFile = await fetch(`${host}/api/comments/${id}`);
+  const comments = await commentsFile.json();
+
   return {
     props: {
       teams: teamsFileJSON.teams,
       round,
+      comments,
     },
   };
 }

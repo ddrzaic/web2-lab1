@@ -1,4 +1,4 @@
-import { Calendar, Match, Team, TeamStats } from "./Types";
+import { Calendar, Match, Team, TeamStats, Comment } from "./Types";
 
 export const calculateTeamStats = (
   calendar: Calendar,
@@ -103,9 +103,9 @@ export const updateMatchInBackend = (match: Match, roundId: number) => {
   };
   const host = process.env.APP_BASE_URL || "http://localhost:3000";
 
-  fetch(`${host}/api/matches/`, requestOptions)
-    .then((response) => response.json())
-    .then((data) => console.log(data));
+  fetch(`${host}/api/matches/`, requestOptions).then((response) =>
+    response.json()
+  );
 };
 
 export const formatDate = (date: string) => {
@@ -114,6 +114,8 @@ export const formatDate = (date: string) => {
     year: "numeric",
     month: "numeric",
     day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
   } as const;
 
   return dateObject.toLocaleDateString("hr-HR", options);

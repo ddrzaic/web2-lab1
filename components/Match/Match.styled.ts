@@ -8,14 +8,17 @@ export const Match = styled.div`
   border: 1px solid #d8d8d8;
   padding: 8px 30px;
   width: 100%;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
 `;
 
 export const Team = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
   p {
     font-weight: 500;
+    margin: 8px 0;
   }
 `;
 
@@ -60,6 +63,13 @@ export const DateTime = styled.div`
 
   font-size: 14px;
   p {
-    margin: 0 10px 0 0;
+    margin: 10px 10px 10px 0;
   }
+`;
+
+export const MatchHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
 `;

@@ -1,3 +1,4 @@
+import { useUser } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/router";
 import React from "react";
 import { Team, Calendar } from "../../helpers/Types";
@@ -12,6 +13,7 @@ export interface HomeProps {
 
 export const HomePage: React.FC<HomeProps> = ({ teams, calendar }) => {
   const router = useRouter();
+  const { isLoading } = useUser();
 
   const handleRouncClick = (round: number) => {
     router.push("/round/" + round);
@@ -29,10 +31,10 @@ export const HomePage: React.FC<HomeProps> = ({ teams, calendar }) => {
       </S.RoundDates>
     </S.Round>
   ));
-  return (
+  return !isLoading ? (
     <S.HomePageContainer>
       <ScoreBoard teams={teams} calendar={calendar}></ScoreBoard>
       <S.RoundsWrapper>{rounds}</S.RoundsWrapper>
     </S.HomePageContainer>
-  );
+  ) : null;
 };

@@ -33,3 +33,12 @@ export type TeamStats = {
   points: number;
   goalDifference: number;
 };
+
+export type Comment = {
+  id: number;
+  roundId: number;
+  author: string;
+  text: string;
+  date: string;
+  time: string;
+};

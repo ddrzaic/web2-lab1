@@ -35,26 +35,42 @@ export const MatchComponent: React.FC<MatchProps> = ({
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const handleEditMatch = (match: Match) => {
-    updateMatchInBackend(match, roundId);
-    setMatch(match);
-    setIsEditModalOpen(false);
+    if (
+      isNaN(match.teams[0].score) ||
+      isNaN(match.teams[1].score) ||
+      match.teams[0].score < 0 ||
+      match.teams[1].score < 0
+    ) {
+      alert("Unesite ispravne rezultate");
+      return;
+    }
+    if (isAdmin) {
+      updateMatchInBackend(match, roundId);
+      setMatch(match);
+      setIsEditModalOpen(false);
+    } else {
+      alert("Nemate pravo da menjate rezultate");
+    }
   };
 
   return (
     <S.Match>
-      {isAdmin && (
-        <S.EditButton
-          onClick={() => {
-            setIsEditModalOpen(true);
-          }}
-        >
-          Edit
-        </S.EditButton>
-      )}
-      <S.DateTime>
-        <p>{formatDate(match.date)}</p>
-        <p>{match.time}</p>
-      </S.DateTime>
+      <S.MatchHeader>
+        <S.DateTime>
+          <p>{formatDate(match.date)}</p>
+          <p>{match.time}</p>
+        </S.DateTime>
+        {isAdmin && (
+          <S.EditButton
+            onClick={() => {
+              setIsEditModalOpen(true);
+            }}
+          >
+            Edit
+          </S.EditButton>
+        )}
+      </S.MatchHeader>
+
       <S.Team>
         <p>{teamsDict[homeTeamId]}</p>
         <p>{homeTeamScore}</p>

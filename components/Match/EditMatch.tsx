@@ -87,6 +87,7 @@ export const EditMatch: React.FC<EditMatchProps> = ({
             <p>{teamsDict[homeTeamId]}</p>
             <S.Input
               type="number"
+              min="0"
               value={newInfo.teams[0].score}
               onChange={(e) =>
                 handleChange(
